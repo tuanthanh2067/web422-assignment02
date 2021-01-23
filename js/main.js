@@ -1,16 +1,17 @@
+const $ = require("jquery");
+global.jQuery = $;
+const _ = require("lodash");
+require("bootstrap");
+require("bootstrap/dist/css/bootstrap.min.css");
+
+const Dialog = require("../modules/Dialog");
+const { avg } = require("../utils/utilities");
+
 let restaurantData = [];
 let currentRestaurant = {};
 let page = 1;
 const perPage = 10;
 let map = null;
-
-const avg = (grades) => {
-  let avg = 0;
-  _.forEach(grades, function (grade) {
-    avg += grade.score;
-  });
-  return (avg / grades.length).toFixed(2);
-};
 
 const tableRows = _.template(`
     <% _.forEach(restaurants, function(restaurant) { %>
@@ -18,7 +19,7 @@ const tableRows = _.template(`
             <td><%- restaurant.name %></td>
             <td><%- restaurant.cuisine %></td>
             <td><%- restaurant.address.building%> <%- restaurant.address.street %></td>
-            <td><%- avg(restaurant.grades) %></td>
+            <td><%= avg(restaurant.grades) %></td>
         </tr>
     <% }); %>
   `);
@@ -36,12 +37,13 @@ const loadRestaurantData = () => {
     })
     .then((data) => {
       restaurantData = data;
-      const rows = tableRows({ restaurants: restaurantData });
+      const rows = tableRows({ restaurants: restaurantData, avg: avg });
       $("#restaurant-table tbody").html(rows);
       $("#current-page").html(page);
     })
     .catch((err) => {
       console.warn("Error fetching data from server");
+      console.log(err);
     });
 };
 
@@ -84,24 +86,15 @@ $(function () {
 
   // shown bs modal for modal window
   $("#restaurant-modal").on("shown.bs.modal", function () {
-    map = new L.Map("leaflet", {
-      center: [
-        currentRestaurant.address.coord[1],
-        currentRestaurant.address.coord[0],
-      ],
-      zoom: 18,
-      layers: [
-        new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
-      ],
-    });
-    L.marker([
+    map = new Dialog(
       currentRestaurant.address.coord[1],
-      currentRestaurant.address.coord[0],
-    ]).addTo(map);
+      currentRestaurant.address.coord[0]
+    );
+    map.show();
   });
 
   // hidden bs modal for modal window
   $("#restaurant-modal").on("hidden.bs.modal", function () {
-    map.remove();
+    map.hidden();
   });
 });

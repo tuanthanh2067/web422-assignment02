@@ -1,0 +1,29 @@
+{
+  "name": "assignment02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "jquery": "^3.5.1",
+    "leaflet": "^1.7.1",
+    "lodash": "^4.17.20",
+    "parcel-bundler": "^1.12.4"
+  },
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --public-url ./",
+    "start": "npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanthanh2067/web422-assignment02.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuanthanh2067/web422-assignment02/issues"
+  },
+  "homepage": "https://github.com/tuanthanh2067/web422-assignment02#readme"
+}
