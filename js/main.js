@@ -1,3 +1,14 @@
+/*********************************************************************************
+ *  WEB422 – Assignment 2
+ *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.
+ *  No part of this assignment has been copied manually or electronically from any other source
+ *  (including web sites) or distributed to other students.
+ *
+ *  Name: Tuan Thanh Tan Student ID: 102183191 Date: February 1st, 2021
+ *
+ *
+ ********************************************************************************/
+
 const $ = require("jquery");
 global.jQuery = $;
 const _ = require("lodash");
